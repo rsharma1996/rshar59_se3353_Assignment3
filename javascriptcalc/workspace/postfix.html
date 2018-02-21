@@ -1,0 +1,61 @@
+Input : <input type="text" id="input"  />
+<input id="calc" type="button" value="Submit" />
+<br/>
+Answer : <span id="result"></span>
+<br>
+<a href="rpncalc.html" class="button">Infix Mode</a>
+<br/>
+<script>
+document.getElementById("calc").onclick = evaluate;
+function evaluate() {
+    var postStr = document.getElementById("input").value; //initial postfix expression     
+    var postArray = new Array();
+    postArray = postStr.split(""); //string.split() turns string into array!
+
+    var stack = [];
+    var result;
+    var first;
+    var second;
+    //var k;
+    for (var i = 0; i < postArray.length; i++) {
+        if ((postArray[i] != "^") && (postArray[i] != "+") && (postArray[i] != "-") && (postArray[i] != "*") && (postArray[i] != "/")) {
+            stack.push(+postArray[i]);
+        }
+
+        else if ((postArray[i] == "^") || (postArray[i] == "+") || (postArray[i] == "-") || (postArray[i] == "*") || (postArray[i] == "/")) {
+            if (postArray[i] == '+') {
+                first = stack.pop();
+                second = stack.pop();
+                result = second + first;
+                stack.push(result);
+            }
+            else if (postArray[i] == '*') {
+                first = stack.pop();
+                second = stack.pop();
+                result = second * first;
+                stack.push(result);
+            }
+            else if (postArray[i] == '/') {
+                first = stack.pop();
+                second = stack.pop();
+                result = second / first;
+                stack.push(result);
+            }
+            else if (postArray[i] == '-') {
+                first = stack.pop();
+                second = stack.pop();
+                result = second - first;
+                stack.push(result);
+            }
+        }
+    }
+    
+    var finalRes = stack.pop();
+    document.getElementById("result").innerHTML = finalRes;
+    
+    
+    
+}
+</script>
+  
+  
